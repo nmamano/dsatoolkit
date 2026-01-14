@@ -1,0 +1,1154 @@
+{
+  "account-sharing-detection": {
+    "name": "Account Sharing Detection",
+    "difficulty": "easy"
+  },
+  "action-log-anomalies": {
+    "name": "Action Log Anomalies",
+    "difficulty": "medium"
+  },
+  "ad-campaign-boost": {
+    "name": "Ad Campaign Boost",
+    "difficulty": "medium"
+  },
+  "ad-campaign-with-small-boosts": {
+    "name": "Ad Campaign With Small Boosts",
+    "difficulty": "medium"
+  },
+  "adjacency-list-validation": {
+    "name": "Adjacency List Validation",
+    "difficulty": "easy"
+  },
+  "aligned-chain": {
+    "name": "Aligned Chain",
+    "difficulty": "medium"
+  },
+  "aligned-path": {
+    "name": "Aligned Path",
+    "difficulty": "medium"
+  },
+  "all-overbooked-slots": {
+    "name": "All Overbooked Slots",
+    "difficulty": "medium"
+  },
+  "array-intersection": {
+    "name": "Array Intersection",
+    "difficulty": "easy"
+  },
+  "array-reversal": {
+    "name": "Array Reversal",
+    "difficulty": "easy"
+  },
+  "auto-complete-class": {
+    "name": "Autocomplete Class",
+    "difficulty": "hard"
+  },
+  "balance-point": {
+    "name": "Balance Point",
+    "difficulty": "easy"
+  },
+  "balanced-partition": {
+    "name": "Balanced Partition",
+    "difficulty": "medium"
+  },
+  "boosting-days-multiple-times": {
+    "name": "Boosting Days Multiple Times",
+    "difficulty": "medium"
+  },
+  "bst-duplicate-detection": {
+    "name": "BST Duplicate Detection",
+    "difficulty": "medium"
+  },
+  "bst-kth-element": {
+    "name": "BST Kth Element",
+    "difficulty": "medium"
+  },
+  "bst-merge-into-array": {
+    "name": "BST Merge Into Array",
+    "difficulty": "medium"
+  },
+  "bst-nearest-value": {
+    "name": "BST Nearest Value",
+    "difficulty": "medium"
+  },
+  "bst-search": {
+    "name": "BST Search",
+    "difficulty": "easy"
+  },
+  "bst-validation": {
+    "name": "BST Validation",
+    "difficulty": "medium"
+  },
+  "cctv-footage": {
+    "name": "CCTV Footage",
+    "difficulty": "easy"
+  },
+  "center-assignment": {
+    "name": "Center Assignment",
+    "difficulty": "medium"
+  },
+  "channel-views": {
+    "name": "Channel Views",
+    "difficulty": "easy"
+  },
+  "cheater-detection": {
+    "name": "Cheater Detection",
+    "difficulty": "medium"
+  },
+  "chess-moves": {
+    "name": "Chess Moves",
+    "difficulty": "medium"
+  },
+  "company-launches": {
+    "name": "Company Launches",
+    "difficulty": "medium"
+  },
+  "compare-two-linked-lists": {
+    "name": "Compare Two Linked Lists",
+    "difficulty": "easy"
+  },
+  "compress-array": {
+    "name": "Compress Array",
+    "difficulty": "easy"
+  },
+  "compress-array-by-k": {
+    "name": "Compress Array By K",
+    "difficulty": "medium"
+  },
+  "count-good-subarrays-with-at-least-k-sales": {
+    "name": "Count Good Subarrays With At Least K Sales",
+    "difficulty": "hard"
+  },
+  "count-grid-islands": {
+    "name": "Count Grid Islands",
+    "difficulty": "medium"
+  },
+  "count-pairs-with-sum-greater-than-target": {
+    "name": "Count Pairs with Sum Greater Than Target",
+    "difficulty": "easy"
+  },
+  "count-subarrays-with-all-remainders": {
+    "name": "Count Subarrays With All Remainders",
+    "difficulty": "hard"
+  },
+  "count-subarrays-with-at-least-k-bad-days": {
+    "name": "Count Subarrays With At Least K Bad Days",
+    "difficulty": "hard"
+  },
+  "count-subarrays-with-at-most-k-bad-days": {
+    "name": "Count Subarrays With At Most K Bad Days",
+    "difficulty": "hard"
+  },
+  "count-subarrays-with-bad-days-in-range": {
+    "name": "Count Subarrays With Bad Days In Range",
+    "difficulty": "hard"
+  },
+  "count-subarrays-with-drops": {
+    "name": "Count Subarrays With Drops",
+    "difficulty": "hard"
+  },
+  "count-subarrays-with-exactly-k-bad-days": {
+    "name": "Count Subarrays With Exactly K Bad Days",
+    "difficulty": "hard"
+  },
+  "count-subarrays-with-good-start-and-ending": {
+    "name": "Count Subarrays With Good Start And Ending",
+    "difficulty": "medium"
+  },
+  "count-subarrays-with-sum-k": {
+    "name": "Count Subarrays With Sum K",
+    "difficulty": "medium"
+  },
+  "count-substrings-without-letter": {
+    "name": "Count Substrings Without Letter",
+    "difficulty": "easy"
+  },
+  "count-unique-submultisets-with-sum-zero": {
+    "name": "Count Unique Submultisets With Sum Zero",
+    "difficulty": "hard"
+  },
+  "count-zero-sum-paths": {
+    "name": "Count 0-Sum Paths",
+    "difficulty": "medium"
+  },
+  "counting-paths": {
+    "name": "Counting Paths",
+    "difficulty": "medium"
+  },
+  "current-url": {
+    "name": "Current URL",
+    "difficulty": "easy"
+  },
+  "current-url-with-forward": {
+    "name": "Current URL With Forward",
+    "difficulty": "medium"
+  },
+  "custom-brackets": {
+    "name": "Custom Brackets",
+    "difficulty": "medium"
+  },
+  "dag-distances": {
+    "name": "DAG Distances",
+    "difficulty": "medium"
+  },
+  "dag-longest-path": {
+    "name": "DAG Longest Path",
+    "difficulty": "medium"
+  },
+  "dag-path-reconstruction": {
+    "name": "DAG Path Reconstruction",
+    "difficulty": "medium"
+  },
+  "days-until-all-infected": {
+    "name": "Days Until All Infected",
+    "difficulty": "medium"
+  },
+  "decode-a-string": {
+    "name": "Decode A String",
+    "difficulty": "hard"
+  },
+  "delete-operations": {
+    "name": "Delete Operations",
+    "difficulty": "medium"
+  },
+  "diminish-largest": {
+    "name": "Diminish Largest",
+    "difficulty": "medium"
+  },
+  "distance-in-weighted-graph": {
+    "name": "Distance in Weighted Graph",
+    "difficulty": "hard"
+  },
+  "domain-resolver": {
+    "name": "Domain Resolver",
+    "difficulty": "easy"
+  },
+  "doubly-linked-list-design": {
+    "name": "Doubly Linked List Design",
+    "difficulty": "medium"
+  },
+  "doubly-linked-list-to-array": {
+    "name": "Doubly Linked List To Array",
+    "difficulty": "easy"
+  },
+  "duplicate-file-contents": {
+    "name": "Duplicate File Contents",
+    "difficulty": "medium"
+  },
+  "duplicate-removal-in-sorted-linked-list": {
+    "name": "Duplicate Removal In Sorted Linked List",
+    "difficulty": "easy"
+  },
+  "duplicate-zeros-prefix": {
+    "name": "Duplicate Zeros Prefix",
+    "difficulty": "hard"
+  },
+  "dutch-flag-problem": {
+    "name": "Dutch Flag Problem",
+    "difficulty": "easy"
+  },
+  "edge-in-mst": {
+    "name": "Edge In MST",
+    "difficulty": "hard"
+  },
+  "edge-list-conversion": {
+    "name": "Edge List Conversion",
+    "difficulty": "easy"
+  },
+  "enduring-best-seller-streak": {
+    "name": "Enduring Best Seller Streak",
+    "difficulty": "medium"
+  },
+  "escape-with-all-clues": {
+    "name": "Escape With All Clues",
+    "difficulty": "hard"
+  },
+  "evaluate-expression-tree": {
+    "name": "Evaluate Expression Tree",
+    "difficulty": "medium"
+  },
+  "exclusive-product": {
+    "name": "Exclusive Product",
+    "difficulty": "medium"
+  },
+  "extra-dynamic-array-operations": {
+    "name": "Extra Dynamic Array Operations",
+    "difficulty": "medium"
+  },
+  "fewest-script-runs": {
+    "name": "Fewest Script Runs",
+    "difficulty": "medium"
+  },
+  "find-all-squares": {
+    "name": "Find All Squares",
+    "difficulty": "easy"
+  },
+  "first-false-in-descending-boolean-array": {
+    "name": "First False In Descending Boolean Array",
+    "difficulty": "easy"
+  },
+  "first-k": {
+    "name": "First K",
+    "difficulty": "hard"
+  },
+  "first-non-negative-number": {
+    "name": "First Non-Negative Number",
+    "difficulty": "easy"
+  },
+  "first-time-all-connected": {
+    "name": "First Time All Connected",
+    "difficulty": "medium"
+  },
+  "first-true-in-ascending-boolean-array": {
+    "name": "First True In Ascending Boolean Array",
+    "difficulty": "easy"
+  },
+  "four-directional-max-sum-path": {
+    "name": "4-Directional Max-Sum Path",
+    "difficulty": "hard"
+  },
+  "four-directional-max-sum-path-reconstruction": {
+    "name": "4-Directional Max-Sum Path Reconstruction",
+    "difficulty": "hard"
+  },
+  "google-colors": {
+    "name": "Google Colors",
+    "difficulty": "medium"
+  },
+  "graph-hangout": {
+    "name": "Graph Hangout",
+    "difficulty": "medium"
+  },
+  "graph-path": {
+    "name": "Graph Path",
+    "difficulty": "medium"
+  },
+  "hangman-word-matching": {
+    "name": "Hangman Word Matching",
+    "difficulty": "medium"
+  },
+  "has-duplicate": {
+    "name": "Has Duplicate",
+    "difficulty": "easy"
+  },
+  "hash-map-class": {
+    "name": "Hash Map Class",
+    "difficulty": "hard"
+  },
+  "hash-map-class-extensions": {
+    "name": "Hash Map Class Extensions",
+    "difficulty": "hard"
+  },
+  "hash-set-class": {
+    "name": "Hash Set Class",
+    "difficulty": "hard"
+  },
+  "hash-set-class-extensions": {
+    "name": "Hash Set Class Extensions",
+    "difficulty": "hard"
+  },
+  "hidden-message": {
+    "name": "Hidden Message",
+    "difficulty": "medium"
+  },
+  "highest-average-elevation-gain": {
+    "name": "Highest Average Elevation Gain",
+    "difficulty": "medium"
+  },
+  "hilliest-connected-component": {
+    "name": "Hilliest Connected Component",
+    "difficulty": "medium"
+  },
+  "hiring-and-training": {
+    "name": "Hiring And Training",
+    "difficulty": "hard"
+  },
+  "ikea-shopping": {
+    "name": "IKEA Shopping",
+    "difficulty": "hard"
+  },
+  "image-filter": {
+    "name": "Image Filter",
+    "difficulty": "easy"
+  },
+  "implement-a-heap": {
+    "name": "Implement A Heap",
+    "difficulty": "medium"
+  },
+  "implement-dynamic-array": {
+    "name": "Implement Dynamic Array",
+    "difficulty": "medium"
+  },
+  "implement-mergesort": {
+    "name": "Implement Mergesort",
+    "difficulty": "medium"
+  },
+  "implement-quicksort": {
+    "name": "Implement Quicksort",
+    "difficulty": "medium"
+  },
+  "in-place-duplicate-removal": {
+    "name": "In-Place Duplicate Removal",
+    "difficulty": "medium"
+  },
+  "interval-intersection": {
+    "name": "Interval Intersection",
+    "difficulty": "medium"
+  },
+  "interval-xor": {
+    "name": "Interval XOR",
+    "difficulty": "medium"
+  },
+  "invert-a-binary-tree": {
+    "name": "Invert a Binary Tree",
+    "difficulty": "easy"
+  },
+  "is-reachable": {
+    "name": "Is Reachable",
+    "difficulty": "easy"
+  },
+  "jumping-numbers": {
+    "name": "Jumping Numbers",
+    "difficulty": "medium"
+  },
+  "k-most-played": {
+    "name": "K Most Played",
+    "difficulty": "medium"
+  },
+  "k-pairs-with-smallest-sums": {
+    "name": "K Pairs with Smallest Sums",
+    "difficulty": "medium"
+  },
+  "k-smallest-elements-in-min-heap": {
+    "name": "K Smallest Elements in a Min-Heap",
+    "difficulty": "hard"
+  },
+  "k-sorted-array": {
+    "name": "K-Sorted Array",
+    "difficulty": "medium"
+  },
+  "king-kong-vs-godzilla": {
+    "name": "King Kong Vs Godzilla",
+    "difficulty": "hard"
+  },
+  "king-kong-vs-godzilla-in-the-fog": {
+    "name": "King Kong Vs Godzilla In The Fog",
+    "difficulty": "hard"
+  },
+  "laminal-arrays": {
+    "name": "Laminal Arrays",
+    "difficulty": "medium"
+  },
+  "largest-connected-component-over-time": {
+    "name": "Largest Connected Component Over Time",
+    "difficulty": "medium"
+  },
+  "largest-rectangle": {
+    "name": "Largest Rectangle",
+    "difficulty": "hard"
+  },
+  "largest-set-intersection": {
+    "name": "Largest Set Intersection",
+    "difficulty": "hard"
+  },
+  "largest-temperature-change": {
+    "name": "Largest Temperature Change",
+    "difficulty": "hard"
+  },
+  "last-true-in-descending-boolean-array": {
+    "name": "Last True In Descending Boolean Array",
+    "difficulty": "easy"
+  },
+  "left-view": {
+    "name": "Left View",
+    "difficulty": "medium"
+  },
+  "lego-castle": {
+    "name": "Lego Castle",
+    "difficulty": "medium"
+  },
+  "linked-list-based-queue": {
+    "name": "Linked-List-Based Queue",
+    "difficulty": "medium"
+  },
+  "linked-list-based-stack": {
+    "name": "Linked-List-Based Stack",
+    "difficulty": "easy"
+  },
+  "linked-list-block-reversal": {
+    "name": "Linked-List Block Reversal",
+    "difficulty": "hard"
+  },
+  "linked-list-copy": {
+    "name": "Linked-List Copy",
+    "difficulty": "easy"
+  },
+  "linked-list-cycle-detection": {
+    "name": "Linked-List Cycle Detection",
+    "difficulty": "medium"
+  },
+  "linked-list-cycle-length": {
+    "name": "Linked-List Cycle Length",
+    "difficulty": "hard"
+  },
+  "linked-list-cycle-start": {
+    "name": "Linked-List Cycle Start",
+    "difficulty": "hard"
+  },
+  "linked-list-midpoint": {
+    "name": "Linked-List Midpoint",
+    "difficulty": "medium"
+  },
+  "linked-list-reversal": {
+    "name": "Linked-List Reversal",
+    "difficulty": "easy"
+  },
+  "linked-list-zip": {
+    "name": "Linked-List Zip",
+    "difficulty": "easy"
+  },
+  "list-of-divisors": {
+    "name": "List of Divisors",
+    "difficulty": "easy"
+  },
+  "longest-alphabet-chain": {
+    "name": "Longest Alphabet Chain",
+    "difficulty": "medium"
+  },
+  "longest-alternating-sequence": {
+    "name": "Longest Alternating Sequence",
+    "difficulty": "medium"
+  },
+  "longest-balanced-subsequence": {
+    "name": "Longest Balanced Subsequence",
+    "difficulty": "medium"
+  },
+  "longest-common-subsequence": {
+    "name": "Longest Common Subsequence",
+    "difficulty": "medium"
+  },
+  "longest-consecutive-sequence": {
+    "name": "Longest Consecutive Sequence",
+    "difficulty": "hard"
+  },
+  "longest-good-day-streak": {
+    "name": "Longest Good Day Streak",
+    "difficulty": "easy"
+  },
+  "longest-path-of-increasing-degrees": {
+    "name": "Longest Path Of Increasing Degrees",
+    "difficulty": "hard"
+  },
+  "longest-period-at-most-k-distinct": {
+    "name": "Longest Period At Most K Distinct",
+    "difficulty": "medium"
+  },
+  "longest-repeated-substring": {
+    "name": "Longest Repeated Substring",
+    "difficulty": "hard"
+  },
+  "longest-stable-period": {
+    "name": "Longest Stable Period",
+    "difficulty": "hard"
+  },
+  "longest-subarray-with-sum-k": {
+    "name": "Longest Subarray With Sum K",
+    "difficulty": "hard"
+  },
+  "magic-balls": {
+    "name": "Magic Balls",
+    "difficulty": "medium"
+  },
+  "magic-blackjack": {
+    "name": "Magic Blackjack",
+    "difficulty": "medium"
+  },
+  "make-playlist": {
+    "name": "Make Playlist",
+    "difficulty": "medium"
+  },
+  "matrix-multiplication": {
+    "name": "Matrix Multiplication",
+    "difficulty": "medium"
+  },
+  "matrix-operations": {
+    "name": "Matrix Operations",
+    "difficulty": "medium"
+  },
+  "matrix-rotation": {
+    "name": "Matrix Rotation",
+    "difficulty": "medium"
+  },
+  "max-queue": {
+    "name": "Max Queue",
+    "difficulty": "hard"
+  },
+  "max-subarray-sum": {
+    "name": "Max Subarray Sum",
+    "difficulty": "medium"
+  },
+  "max-sum-path": {
+    "name": "Max-Sum Path",
+    "difficulty": "medium"
+  },
+  "maximum-with-at-most-3-bad-days": {
+    "name": "Maximum With At Most 3 Bad Days",
+    "difficulty": "medium"
+  },
+  "merge-two-sorted-arrays": {
+    "name": "Merge Two Sorted Arrays",
+    "difficulty": "easy"
+  },
+  "min-pages-per-day": {
+    "name": "Min Pages Per Day",
+    "difficulty": "medium"
+  },
+  "min-subarray-sum-split": {
+    "name": "Min Subarray Sum Split",
+    "difficulty": "medium"
+  },
+  "minimum-spanning-tree": {
+    "name": "Minimum Spanning Tree",
+    "difficulty": "medium"
+  },
+  "minimum-steps-to-one": {
+    "name": "Minimum Steps to One",
+    "difficulty": "medium"
+  },
+  "minimum-triplet-medians": {
+    "name": "Minimum Triplet Medians",
+    "difficulty": "medium"
+  },
+  "minivan-road-trip": {
+    "name": "Minivan Road Trip",
+    "difficulty": "medium"
+  },
+  "missing-numbers-in-range": {
+    "name": "Missing Numbers in Range",
+    "difficulty": "medium"
+  },
+  "monkey-eating-bananas": {
+    "name": "Monkey Eating Bananas",
+    "difficulty": "medium"
+  },
+  "most-booked-slot": {
+    "name": "Most Booked Slot",
+    "difficulty": "medium"
+  },
+  "most-frequent-octet": {
+    "name": "Most Frequent Octet",
+    "difficulty": "easy"
+  },
+  "most-listened-across-genres": {
+    "name": "Most Listened Across Genres",
+    "difficulty": "medium"
+  },
+  "most-non-overlapping-intervals": {
+    "name": "Most Non-Overlapping Intervals",
+    "difficulty": "medium"
+  },
+  "most-ones-with-k-flips": {
+    "name": "Most Ones with K Flips",
+    "difficulty": "medium"
+  },
+  "most-prolific-level": {
+    "name": "Most Prolific Level",
+    "difficulty": "medium"
+  },
+  "most-protected-node": {
+    "name": "Most Protected Node",
+    "difficulty": "hard"
+  },
+  "most-sales-in-k-days": {
+    "name": "Most Sales In K Days",
+    "difficulty": "easy"
+  },
+  "most-shared-account": {
+    "name": "Most Shared Account",
+    "difficulty": "easy"
+  },
+  "most-weekly-sales": {
+    "name": "Most Weekly Sales",
+    "difficulty": "easy"
+  },
+  "move-subsequence-to-front": {
+    "name": "Move Subsequence to Front",
+    "difficulty": "hard"
+  },
+  "mst-reconstruction": {
+    "name": "MST Reconstruction",
+    "difficulty": "medium"
+  },
+  "multi-account-cheating": {
+    "name": "Multi-Account Cheating",
+    "difficulty": "easy"
+  },
+  "multi-exit-maze": {
+    "name": "Multi-Exit Maze",
+    "difficulty": "medium"
+  },
+  "multimap": {
+    "name": "Multimap",
+    "difficulty": "hard"
+  },
+  "multiplayer-video-game": {
+    "name": "Multiplayer Video Game",
+    "difficulty": "medium"
+  },
+  "multiset": {
+    "name": "Multiset",
+    "difficulty": "hard"
+  },
+  "n-queens": {
+    "name": "N-Queens Puzzle",
+    "difficulty": "medium"
+  },
+  "nested-array-sum": {
+    "name": "Nested Array Sum",
+    "difficulty": "easy"
+  },
+  "nested-circles": {
+    "name": "Nested Circles",
+    "difficulty": "medium"
+  },
+  "next-greater-element": {
+    "name": "Next Greater Element",
+    "difficulty": "hard"
+  },
+  "num-connected-components-over-time": {
+    "name": "Num Connected Components Over Time",
+    "difficulty": "medium"
+  },
+  "num-groups-operation": {
+    "name": "Num Groups Operation",
+    "difficulty": "medium"
+  },
+  "number-of-palindromic-splits": {
+    "name": "Number Of Palindromic Splits",
+    "difficulty": "hard"
+  },
+  "os-paths": {
+    "name": "OS Paths",
+    "difficulty": "medium"
+  },
+  "palindrome-check": {
+    "name": "Palindrome Check",
+    "difficulty": "easy"
+  },
+  "palindromic-sentence": {
+    "name": "Palindromic Sentence",
+    "difficulty": "easy"
+  },
+  "parallel-compilation": {
+    "name": "Parallel Compilation",
+    "difficulty": "medium"
+  },
+  "parity-sorting": {
+    "name": "Parity Sorting",
+    "difficulty": "easy"
+  },
+  "permutation-enumeration": {
+    "name": "Permutation Enumeration",
+    "difficulty": "medium"
+  },
+  "popular-songs-class": {
+    "name": "Popular Songs Class",
+    "difficulty": "hard"
+  },
+  "powers-mod-m": {
+    "name": "Powers Mod M",
+    "difficulty": "medium"
+  },
+  "prefix-suffix-swap": {
+    "name": "Prefix Suffix Swap",
+    "difficulty": "medium"
+  },
+  "presidential-election": {
+    "name": "Presidential Election",
+    "difficulty": "medium"
+  },
+  "product-of-alphabetical-sums": {
+    "name": "Product of Alphabetical Sums",
+    "difficulty": "medium"
+  },
+  "queens-reach": {
+    "name": "Queen's Reach",
+    "difficulty": "medium"
+  },
+  "quicksort-partition": {
+    "name": "Quicksort Partition",
+    "difficulty": "medium"
+  },
+  "race-overtaking": {
+    "name": "Race Overtaking",
+    "difficulty": "easy"
+  },
+  "reachability-queries": {
+    "name": "Reachability Queries",
+    "difficulty": "medium"
+  },
+  "reconstruct-longest-common-subsequence": {
+    "name": "Reconstruct Longest Common Subsequence",
+    "difficulty": "hard"
+  },
+  "redundant-parentheses": {
+    "name": "Redundant Parentheses",
+    "difficulty": "medium"
+  },
+  "remove-kth-node-from-the-end": {
+    "name": "Remove Kth Node From The End",
+    "difficulty": "medium"
+  },
+  "remove-sandwiched-negatives": {
+    "name": "Remove Sandwiched Negatives",
+    "difficulty": "easy"
+  },
+  "restaurant-ratings": {
+    "name": "Restaurant Ratings",
+    "difficulty": "easy"
+  },
+  "reverse-case-match": {
+    "name": "Reverse Case Match",
+    "difficulty": "medium"
+  },
+  "reverse-words-in-string": {
+    "name": "Reverse Words in String",
+    "difficulty": "medium"
+  },
+  "rgb-distances": {
+    "name": "RGB Distances",
+    "difficulty": "hard"
+  },
+  "road-trip": {
+    "name": "Road Trip",
+    "difficulty": "easy"
+  },
+  "robot-instructions": {
+    "name": "Robot Instructions",
+    "difficulty": "easy"
+  },
+  "same-binary-messages": {
+    "name": "Same Binary Messages",
+    "difficulty": "medium"
+  },
+  "scrabble-tiles": {
+    "name": "Scrabble Tiles",
+    "difficulty": "easy"
+  },
+  "search-in-huge-array": {
+    "name": "Search in Huge Array",
+    "difficulty": "medium"
+  },
+  "search-in-sorted-array": {
+    "name": "Search in Sorted Array",
+    "difficulty": "easy"
+  },
+  "search-in-sorted-grid": {
+    "name": "Search in Sorted Grid",
+    "difficulty": "medium"
+  },
+  "segmented-video-votes": {
+    "name": "Segmented Video Votes",
+    "difficulty": "medium"
+  },
+  "self-doubling-sequence": {
+    "name": "Self-Doubling Sequence",
+    "difficulty": "hard"
+  },
+  "shift-word-to-back": {
+    "name": "Shift Word to Back",
+    "difficulty": "medium"
+  },
+  "shortest-distance-number-repeated": {
+    "name": "Shortest Distance Number Repeated",
+    "difficulty": "easy"
+  },
+  "shortest-distance-string-repeated": {
+    "name": "Shortest Distance String Repeated",
+    "difficulty": "easy"
+  },
+  "shortest-path-queries": {
+    "name": "Shortest Path Queries",
+    "difficulty": "medium"
+  },
+  "shortest-period-with-over-20-sales": {
+    "name": "Shortest Period With Over 20 Sales",
+    "difficulty": "medium"
+  },
+  "shortest-with-all-letters": {
+    "name": "Shortest With All Letters",
+    "difficulty": "medium"
+  },
+  "simple-text-editor": {
+    "name": "Simple Text Editor",
+    "difficulty": "medium"
+  },
+  "singly-linked-list-design": {
+    "name": "Singly Linked List Design",
+    "difficulty": "medium"
+  },
+  "sliding-window-max": {
+    "name": "Sliding Window Max",
+    "difficulty": "hard"
+  },
+  "smaller-prefixes": {
+    "name": "Smaller Prefixes",
+    "difficulty": "easy"
+  },
+  "smallest-range-with-k-elements": {
+    "name": "Smallest Range With K Elements",
+    "difficulty": "medium"
+  },
+  "snowprints": {
+    "name": "Snowprints",
+    "difficulty": "medium"
+  },
+  "sort-by-publication-year": {
+    "name": "Sort By Publication Year",
+    "difficulty": "easy"
+  },
+  "sort-valley-shaped-array": {
+    "name": "Sort Valley Shaped Array",
+    "difficulty": "medium"
+  },
+  "sorting-by-frequency": {
+    "name": "Sorting By Frequency",
+    "difficulty": "easy"
+  },
+  "spanning-tree": {
+    "name": "Spanning Tree",
+    "difficulty": "medium"
+  },
+  "spiral-order": {
+    "name": "Spiral Order",
+    "difficulty": "medium"
+  },
+  "spreadsheet": {
+    "name": "Spreadsheet",
+    "difficulty": "medium"
+  },
+  "string-join": {
+    "name": "String Join",
+    "difficulty": "easy"
+  },
+  "string-matching": {
+    "name": "String Matching",
+    "difficulty": "medium"
+  },
+  "string-split": {
+    "name": "String Split",
+    "difficulty": "easy"
+  },
+  "strong-start-and-ending": {
+    "name": "Strong Start And Ending",
+    "difficulty": "medium"
+  },
+  "strongly-connected-graph": {
+    "name": "Strongly Connected Graph",
+    "difficulty": "medium"
+  },
+  "sub-permutations": {
+    "name": "Sub Permutations",
+    "difficulty": "medium"
+  },
+  "subgrid-maximums": {
+    "name": "Subgrid Maximums",
+    "difficulty": "medium"
+  },
+  "subgrid-sums": {
+    "name": "Subgrid Sums",
+    "difficulty": "medium"
+  },
+  "sublist-reversal": {
+    "name": "Sublist Reversal",
+    "difficulty": "hard"
+  },
+  "subset-enumeration": {
+    "name": "Subset Enumeration",
+    "difficulty": "easy"
+  },
+  "sum-of-first-k-prime-powers": {
+    "name": "Sum Of First K Prime Powers",
+    "difficulty": "medium"
+  },
+  "supersequence": {
+    "name": "Supersequence",
+    "difficulty": "hard"
+  },
+  "symmetric-matrix": {
+    "name": "Symmetric Matrix",
+    "difficulty": "easy"
+  },
+  "target-count-divisible-by-k": {
+    "name": "Target Count Divisible by K",
+    "difficulty": "medium"
+  },
+  "the-floor-is-lava": {
+    "name": "The Floor Is Lava",
+    "difficulty": "medium"
+  },
+  "thesaurusly": {
+    "name": "Thesaurusly",
+    "difficulty": "medium"
+  },
+  "three-sum": {
+    "name": "3-Sum",
+    "difficulty": "medium"
+  },
+  "three-way-merge-without-duplicates": {
+    "name": "Three Way Merge Without Duplicates",
+    "difficulty": "medium"
+  },
+  "tic-tac-toe-position": {
+    "name": "Tic-Tac-Toe Position",
+    "difficulty": "medium"
+  },
+  "tide-aerial-view": {
+    "name": "Tide Aerial View",
+    "difficulty": "medium"
+  },
+  "tiling-floor": {
+    "name": "Tiling Floor",
+    "difficulty": "easy"
+  },
+  "tiling-wide-floor": {
+    "name": "Tiling Wide Floor",
+    "difficulty": "easy"
+  },
+  "time-traveler": {
+    "name": "Time Traveler",
+    "difficulty": "medium"
+  },
+  "time-traveler-max-year": {
+    "name": "Time Traveler Max Year",
+    "difficulty": "hard"
+  },
+  "to-be-or-not-to-be": {
+    "name": "To Be or Not to Be",
+    "difficulty": "easy"
+  },
+  "top-songs-class": {
+    "name": "Top Songs Class",
+    "difficulty": "medium"
+  },
+  "top-songs-class-with-updates": {
+    "name": "Top Songs Class With Updates",
+    "difficulty": "medium"
+  },
+  "topological-ordering": {
+    "name": "Topological Ordering",
+    "difficulty": "easy"
+  },
+  "traversal-order": {
+    "name": "Traversal Order",
+    "difficulty": "easy"
+  },
+  "tree-check": {
+    "name": "Tree Check",
+    "difficulty": "medium"
+  },
+  "tree-diameter": {
+    "name": "Tree Diameter",
+    "difficulty": "medium"
+  },
+  "tree-layout": {
+    "name": "Tree Layout",
+    "difficulty": "medium"
+  },
+  "triangle-count": {
+    "name": "Triangle Count",
+    "difficulty": "medium"
+  },
+  "tridimensional-lego-castle": {
+    "name": "Tridimensional Lego Castle",
+    "difficulty": "medium"
+  },
+  "trie-class": {
+    "name": "Trie Class",
+    "difficulty": "medium"
+  },
+  "tunnel-depth": {
+    "name": "Tunnel Depth",
+    "difficulty": "medium"
+  },
+  "two-array-two-sum": {
+    "name": "2-Array 2-Sum",
+    "difficulty": "easy"
+  },
+  "two-sum": {
+    "name": "2-Sum",
+    "difficulty": "easy"
+  },
+  "union-find-class": {
+    "name": "Union-Find Class",
+    "difficulty": "medium"
+  },
+  "unique-best-seller-streak": {
+    "name": "Unique Best Seller Streak",
+    "difficulty": "medium"
+  },
+  "unique-k-pairs": {
+    "name": "Unique K Pairs",
+    "difficulty": "medium"
+  },
+  "unique-movie-titles": {
+    "name": "Unique Movie Titles",
+    "difficulty": "easy"
+  },
+  "unrooted-tree-diameter": {
+    "name": "Unrooted Tree Diameter",
+    "difficulty": "hard"
+  },
+  "valid-sudoku": {
+    "name": "Valid Sudoku",
+    "difficulty": "medium"
+  },
+  "validate-matrix-rows-columns": {
+    "name": "Validate Matrix Rows and Columns",
+    "difficulty": "easy"
+  },
+  "validate-simple-html-strings": {
+    "name": "Validate Simple HTML Strings",
+    "difficulty": "medium"
+  },
+  "valley-bottom": {
+    "name": "Valley Bottom",
+    "difficulty": "medium"
+  },
+  "viewer-counter-class": {
+    "name": "Viewer Counter Class",
+    "difficulty": "medium"
+  },
+  "water-refilling": {
+    "name": "Water Refilling",
+    "difficulty": "medium"
+  },
+  "white-hat-hacker": {
+    "name": "White Hat Hacker",
+    "difficulty": "medium"
+  },
+  "word-expansion-class": {
+    "name": "Word Expansion Class",
+    "difficulty": "easy"
+  },
+  "word-ladder-game-variation": {
+    "name": "Word Ladder Game Variation",
+    "difficulty": "medium"
+  },
+  "word-match": {
+    "name": "Word Match",
+    "difficulty": "medium"
+  },
+  "youtube-video-reception": {
+    "name": "YouTube Video Reception",
+    "difficulty": "easy"
+  },
+  "youtube-video-unusual-days": {
+    "name": "YouTube Video Unusual Days",
+    "difficulty": "hard"
+  },
+  "zig-zag-order": {
+    "name": "Zig-Zag Order",
+    "difficulty": "medium"
+  }
+}
