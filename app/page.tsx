@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { CheckCircle2, Info, Copy, ExternalLink, Eye } from "lucide-react";
+import { CheckCircle2, Info, Copy, ExternalLink, Eye, X } from "lucide-react";
 import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
 import toolManifest from "./tool_manifest.json";
@@ -135,7 +135,9 @@ export default function Toolset() {
   });
   const [openModal, setOpenModal] = useState<string | null>(null);
   const [isHowToUseOpen, setIsHowToUseOpen] = useState(false);
-  const [isExtendedMode, setIsExtendedMode] = useState(true);
+  // Default to Core mode; only switch to Expert when user opts in
+  const [isExtendedMode, setIsExtendedMode] = useState(false);
+  const [showAccessNotice, setShowAccessNotice] = useState(true);
   const [clickedProblems, setClickedProblems] = useState<Set<string>>(
     new Set()
   );
@@ -290,6 +292,13 @@ export default function Toolset() {
       const parsed: string[] = JSON.parse(savedCompleted);
       setCompletedProblems(new Set<string>(parsed));
     }
+
+    const accessNoticeDismissed = localStorage.getItem(
+      "toolset-access-notice-dismissed"
+    );
+    if (accessNoticeDismissed === "true") {
+      setShowAccessNotice(false);
+    }
   }, []);
 
   // Save mode preference to localStorage whenever it changes
@@ -317,6 +326,11 @@ export default function Toolset() {
       JSON.stringify([...newCompleted])
     );
     localStorage.setItem("toolset-completion-dates", JSON.stringify(newDates));
+  };
+
+  const dismissAccessNotice = () => {
+    setShowAccessNotice(false);
+    localStorage.setItem("toolset-access-notice-dismissed", "true");
   };
 
   const toggleCategory = (categoryName: string) => {
@@ -385,16 +399,20 @@ export default function Toolset() {
   };
 
   const copyLearningPrompt = (toolName: string, wantedOutcome: string) => {
-    const text = `Teach me this concept as it applies to DSA interviews: ${toolName}
+    const text = `Teach me this concept/tool as it applies to DS&A interviews: ${toolName}
 
 Wanted outcome: ${wantedOutcome}
 
 Format:
 
 1. Start with a BRIEF overview, giving context, intuitive explanations, or real-world analogies only if relevant.
+
 2. Explain the concept, keeping it practical to interviews.
+
 3. Show one or two small examples. Use pseudocode if relevant.
+
 4. End with a SHORT "Why this matters in interviews" section.
+
 5. Optional: link any free resources (like LeetCode problems or NeetCode videos) that are DIRECTLY RELEVANT, but only if they are free and directly relevant.`;
     navigator.clipboard.writeText(text);
     toast({
@@ -645,11 +663,11 @@ Format:
               TOOLKIT-{visibleTotalTools}
             </h1>
             <p className="text-base md:text-2xl italic font-medium bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-700 dark:from-teal-400 dark:via-cyan-400 dark:to-teal-500 bg-clip-text text-transparent mb-6">
-              A new way to do coding interview prep
+              Like a problem list, but for reusable techniques
             </p>
 
             <p className="text-sm md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-              The essential DSA tools and techniques for interviews -
+              The essential DS&A tools and techniques for interviews -
               <br />
               with problems from{" "}
               <strong>Beyond Cracking the Coding Interview</strong>.
@@ -746,6 +764,22 @@ Format:
 
       {/* Main content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
+        {showAccessNotice && (
+          <div className="relative mb-6 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm px-5 pr-12 py-3 w-[60%] mx-auto">
+            <button
+              type="button"
+              onClick={dismissAccessNotice}
+              className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
+              aria-label="Dismiss notice"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <p className="text-xs italic text-gray-700 dark:text-gray-200 text-center">
+              To access the problems, solutions, and AI interviewer, you'll have
+              to create an account, but there's nothing else you need to do.
+            </p>
+          </div>
+        )}
         <Accordion type="multiple" className="space-y-4">
           {visibleCategories.map((category) => (
             <AccordionItem
@@ -1232,9 +1266,7 @@ Format:
                   <br />
                   Read the{" "}
                   <a
-                    href="https://nilmamano.com/blog/toolkit"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="https://nilmamano.com/blog/toolkit" target="_blank" rel="noopener noreferrer"
                     className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium no-underline"
                   >
                     Toolkit-X blog post
@@ -1272,7 +1304,7 @@ Format:
                 <p className="text-xs md:text-sm">
                   Each tool has a <strong>Sample Problem</strong> from BCtCI
                   that demonstrates its use. Click to view the statement and
-                  solution (explanation + code in multiple languages).
+                  solution explanation + code in multiple languages.
                   <br />
                   <br />
                   Before reading the solution, launch our{" "}

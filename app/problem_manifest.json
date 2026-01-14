@@ -216,7 +216,7 @@
     "difficulty": "medium"
   },
   "distance-in-weighted-graph": {
-    "name": "Distance in Weighted Graph",
+    "name": "Distance In Weighted Graph",
     "difficulty": "hard"
   },
   "domain-resolver": {
@@ -624,7 +624,7 @@
     "difficulty": "medium"
   },
   "missing-numbers-in-range": {
-    "name": "Missing Numbers in Range",
+    "name": "Missing Numbers In Range",
     "difficulty": "medium"
   },
   "monkey-eating-bananas": {

@@ -10,9 +10,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://dsatoolkit.com"),
-  title: "DSA Toolkit | A new way to do coding interview prep",
+  title: "TOOLKIT-X | Like a problem list, but for reusable techniques",
   description:
-    "The essential DSA tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
+    "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
   icons: {
     icon: [
       { url: "/favicon/favicon.ico" },
@@ -27,17 +27,17 @@ export const metadata: Metadata = {
   },
   manifest: "/favicon/site.webmanifest",
   openGraph: {
-    title: "DSA Toolkit | A new way to do coding interview prep",
+    title: "TOOLKIT-X | Like a problem list, but for reusable techniques",
     description:
-      "The essential DSA tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
+      "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
     url: "https://dsatoolkit.com",
-    siteName: "DSA Toolkit",
+    siteName: "Toolkit-X",
     images: [
       {
         url: "https://dsatoolkit.com/thumbnail.png",
         width: 1200,
         height: 630,
-        alt: "DSA Toolkit - A new way to do coding interview prep",
+        alt: "TOOLKIT-X - Like a problem list, but for reusable techniques",
       },
     ],
     locale: "en_US",
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DSA Toolkit | A new way to do coding interview prep",
+    title: "TOOLKIT-X | Like a problem list, but for reusable techniques",
     description:
-      "The essential DSA tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
+      "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
     images: ["https://dsatoolkit.com/thumbnail.png"],
   },
 };
