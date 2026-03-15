@@ -17,6 +17,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { CheckCircle2, Info, ClipboardCopy, ExternalLink, Eye, X } from "lucide-react";
+import { track } from "@vercel/analytics";
 import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
 import toolManifest from "./tool_manifest.json";
@@ -426,10 +427,12 @@ Format:
       chatgpt: `https://chatgpt.com/?q=${encoded}`,
       claude: `https://claude.ai/new?q=${encoded}`,
     };
+    track("learning_prompt", { provider, tool: toolName });
     window.open(urls[provider], "_blank");
   };
 
   const copyLearningPrompt = (toolName: string, wantedOutcome: string) => {
+    track("learning_prompt", { provider: "clipboard", tool: toolName });
     navigator.clipboard.writeText(buildLearningPrompt(toolName, wantedOutcome));
     toast({
       title: "Copied!",
