@@ -24,6 +24,7 @@ import toolManifest from "./tool_manifest.json";
 import problemManifest from "./problem_manifest.json";
 import { useToast } from "@/hooks/use-toast";
 import { ThemeToggle } from "@/components/theme-toggle";
+import ChatWidget from "@/components/chat-widget";
 
 // Utility function to convert problem name to slug
 const slugify = (text: string) => {
@@ -1449,6 +1450,7 @@ Format:
           </div>
         </div>
       </footer>
+      <ChatWidget />
     </div>
   );
 }
