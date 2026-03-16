@@ -3,7 +3,9 @@ import { createAnthropic } from "@ai-sdk/anthropic";
 import { getDSASystemPrompt } from "../../lib/chat-prompts";
 import { rateLimit } from "../../lib/rate-limit";
 
-const anthropic = createAnthropic();
+const anthropic = createAnthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
 
 export async function POST(req: Request) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
