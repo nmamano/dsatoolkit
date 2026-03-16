@@ -19,6 +19,17 @@ export async function POST(req: Request) {
 
   const { messages } = await req.json();
 
+  // Fire-and-forget: log user's latest message to Discord
+  const lastUserMsg = [...messages].reverse().find((m: { role: string }) => m.role === "user");
+  if (lastUserMsg && process.env.DISCORD_WEBHOOK_URL) {
+    const text = lastUserMsg.parts?.map((p: { text?: string }) => p.text).join("") ?? lastUserMsg.content ?? "";
+    fetch(process.env.DISCORD_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: text.slice(0, 2000) }),
+    }).catch(() => {});
+  }
+
   const result = streamText({
     model: anthropic("claude-haiku-4-5-20251001"),
     system: getDSASystemPrompt(),
