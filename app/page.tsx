@@ -49,10 +49,17 @@ const getProblemSlug = (problemName: string): string | null => {
   return slugify(problemName);
 };
 
-// Get URL for a problem
+// Get IIO URL for a problem
 const getProblemUrl = (problemName: string): string => {
   const slug = getProblemSlug(problemName);
   return `https://start.interviewing.io/beyond-ctci/solution/${slug}`;
+};
+
+// Get Beyond CTCI editor URL for a problem
+const getBeyondCtciUrl = (problemName: string): string | null => {
+  const slug = getProblemSlug(problemName);
+  if (!slug) return null;
+  return `https://beyondctci.dev/editor?problem=${slug}`;
 };
 
 // Get problem difficulty from problem manifest
@@ -651,7 +658,7 @@ Format:
       {tooltip.show && (
         <div
           ref={tooltipRef}
-          className="fixed z-50 px-3 py-2 bg-gray-900 dark:bg-slate-800 text-white dark:text-gray-100 text-sm rounded-lg shadow-lg whitespace-normal max-w-md pointer-events-none border border-slate-700"
+          className="fixed z-[100] px-3 py-2 bg-gray-900 dark:bg-slate-800 text-white dark:text-gray-100 text-sm rounded-lg shadow-lg whitespace-normal max-w-md pointer-events-none border border-slate-700"
           style={{
             left: tooltip.x,
             top: tooltip.y,
@@ -926,40 +933,80 @@ Format:
 
                         <div className="flex flex-wrap gap-2 flex-shrink-0 sm:flex-nowrap">
                           {tool.primaryProblem && (
-                            <Button
-                              asChild
-                              variant="outline"
-                              size="sm"
-                              className="text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 h-6 md:h-7 bg-blue-50 dark:bg-blue-900/30 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/50"
-                            >
+                            <div className="flex items-center gap-0 border border-blue-300 dark:border-blue-700 rounded-md bg-blue-50 dark:bg-blue-900/30 h-6 md:h-7 overflow-hidden">
                               <a
-                                href={getProblemUrl(tool.primaryProblem)}
+                                href={getBeyondCtciUrl(tool.primaryProblem) || getProblemUrl(tool.primaryProblem)}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-1"
-                                onClick={() =>
-                                  handleProblemClick(tool.primaryProblem!)
-                                }
+                                className="text-[10px] md:text-xs text-blue-700 dark:text-blue-300 px-1.5 md:px-2 flex-shrink-0 hover:bg-blue-100 dark:hover:bg-blue-900/50 h-full flex items-center transition-colors"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleProblemClick(tool.primaryProblem!);
+                                }}
                                 onMouseEnter={(e) => {
-                                  if (!tool.primaryProblem) return;
-                                  const rect =
-                                    e.currentTarget.getBoundingClientRect();
+                                  e.stopPropagation();
+                                  const rect = e.currentTarget.getBoundingClientRect();
                                   setTooltip({
                                     show: true,
                                     x: rect.left + rect.width / 2,
                                     y: rect.top - 10,
-                                    content: tool.primaryProblem,
+                                    content: tool.primaryProblem!,
                                   });
                                 }}
                                 onMouseLeave={handleMouseLeave}
                               >
-                                <ExternalLink className="h-2.5 w-2.5 md:h-3 md:w-3 flex-shrink-0" />
-                                <span className="hidden md:inline">
-                                  Sample problem
-                                </span>
+                                <span className="hidden md:inline">Sample problem</span>
                                 <span className="md:hidden">Problem</span>
                               </a>
-                            </Button>
+                              {getBeyondCtciUrl(tool.primaryProblem) && (
+                                <a
+                                  href={getBeyondCtciUrl(tool.primaryProblem)!}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center justify-center h-full aspect-square border-l border-blue-300 dark:border-blue-700 hover:opacity-80 transition-opacity overflow-hidden bg-[#4ca5b0]"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleProblemClick(tool.primaryProblem!);
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.stopPropagation();
+                                    const rect = e.currentTarget.getBoundingClientRect();
+                                    setTooltip({
+                                      show: true,
+                                      x: rect.left + rect.width / 2,
+                                      y: rect.top - 10,
+                                      content: "Practice platform",
+                                    });
+                                  }}
+                                  onMouseLeave={handleMouseLeave}
+                                >
+                                  <img src="/bctci-icon.webp" alt="Beyond CTCI" className="h-[80%] w-[80%] object-contain" />
+                                </a>
+                              )}
+                              <a
+                                href={getProblemUrl(tool.primaryProblem)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center h-full aspect-square border-l border-blue-300 dark:border-blue-700 hover:opacity-80 transition-opacity overflow-hidden bg-[#f5bf4f]"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleProblemClick(tool.primaryProblem!);
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.stopPropagation();
+                                  const rect = e.currentTarget.getBoundingClientRect();
+                                  setTooltip({
+                                    show: true,
+                                    x: rect.left + rect.width / 2,
+                                    y: rect.top - 10,
+                                    content: "AI Interviewer",
+                                  });
+                                }}
+                                onMouseLeave={handleMouseLeave}
+                              >
+                                <img src="/iio-icon.png" alt="interviewing.io" className="h-[80%] w-[80%] object-contain" />
+                              </a>
+                            </div>
                           )}
 
                           {tool.otherProblems.length > 0 && (
@@ -1018,17 +1065,7 @@ Format:
                                             ) || [];
                                           return (
                                             <div>
-                                              <a
-                                                href={getProblemUrl(
-                                                  tool.primaryProblem
-                                                )}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                onClick={() =>
-                                                  handleProblemClick(
-                                                    tool.primaryProblem!
-                                                  )
-                                                }
+                                              <div
                                                 className={`block p-3 rounded-md border transition-colors ${colorClasses} ${
                                                   isClicked
                                                     ? "opacity-75 ring-2 ring-blue-300 dark:ring-blue-600"
@@ -1044,13 +1081,6 @@ Format:
                                                       <>
                                                         <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0 flex items-center" />
                                                         <div
-                                                          onClick={(e) => {
-                                                            e.preventDefault();
-                                                            e.stopPropagation();
-                                                            toggleProblemCompletion(
-                                                              tool.primaryProblem!
-                                                            );
-                                                          }}
                                                           className="flex items-center justify-center"
                                                         >
                                                           <Checkbox
@@ -1068,9 +1098,40 @@ Format:
                                                       </>
                                                     )}
                                                   </div>
-                                                  <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                                                  <div className="flex items-center gap-1.5">
+                                                    {getBeyondCtciUrl(tool.primaryProblem) && (
+                                                      <a
+                                                        href={getBeyondCtciUrl(tool.primaryProblem)!}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        onClick={() => handleProblemClick(tool.primaryProblem!)}
+                                                        onMouseEnter={(e) => {
+                                                          const rect = e.currentTarget.getBoundingClientRect();
+                                                          setTooltip({ show: true, x: rect.left + rect.width / 2, y: rect.top - 10, content: "Practice platform" });
+                                                        }}
+                                                        onMouseLeave={handleMouseLeave}
+                                                        className="hover:opacity-80 transition-opacity"
+                                                      >
+                                                        <img src="/bctci-icon.webp" alt="Beyond CTCI" className="h-7 w-7 rounded-sm" />
+                                                      </a>
+                                                    )}
+                                                    <a
+                                                      href={getProblemUrl(tool.primaryProblem)}
+                                                      target="_blank"
+                                                      rel="noopener noreferrer"
+                                                      onClick={() => handleProblemClick(tool.primaryProblem!)}
+                                                      onMouseEnter={(e) => {
+                                                        const rect = e.currentTarget.getBoundingClientRect();
+                                                        setTooltip({ show: true, x: rect.left + rect.width / 2, y: rect.top - 10, content: "AI Interviewer" });
+                                                      }}
+                                                      onMouseLeave={handleMouseLeave}
+                                                      className="hover:opacity-80 transition-opacity"
+                                                    >
+                                                      <img src="/iio-icon.png" alt="interviewing.io" className="h-7 w-7 rounded-sm" />
+                                                    </a>
+                                                  </div>
                                                 </div>
-                                              </a>
+                                              </div>
                                               {toolsUsingProblem.length > 1 && (
                                                 <div className="pl-3 mt-1 mb-3 text-xs text-gray-600 dark:text-gray-400">
                                                   <span className="font-bold">
@@ -1143,13 +1204,7 @@ Format:
                                               problemToToolsMap.get(name) || [];
                                             return (
                                               <div key={name}>
-                                                <a
-                                                  href={getProblemUrl(name)}
-                                                  target="_blank"
-                                                  rel="noopener noreferrer"
-                                                  onClick={() =>
-                                                    handleProblemClick(name)
-                                                  }
+                                                <div
                                                   className={`block p-3 rounded-md border transition-colors ${colorClasses} ${
                                                     isClicked
                                                       ? "opacity-75 ring-2 ring-blue-300 dark:ring-blue-600"
@@ -1165,13 +1220,6 @@ Format:
                                                         <>
                                                           <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0 flex items-center" />
                                                           <div
-                                                            onClick={(e) => {
-                                                              e.preventDefault();
-                                                              e.stopPropagation();
-                                                              toggleProblemCompletion(
-                                                                name
-                                                              );
-                                                            }}
                                                             className="flex items-center justify-center"
                                                           >
                                                             <Checkbox
@@ -1189,9 +1237,40 @@ Format:
                                                         </>
                                                       )}
                                                     </div>
-                                                    <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                                                    <div className="flex items-center gap-1.5">
+                                                      {getBeyondCtciUrl(name) && (
+                                                        <a
+                                                          href={getBeyondCtciUrl(name)!}
+                                                          target="_blank"
+                                                          rel="noopener noreferrer"
+                                                          onClick={() => handleProblemClick(name)}
+                                                          onMouseEnter={(e) => {
+                                                            const rect = e.currentTarget.getBoundingClientRect();
+                                                            setTooltip({ show: true, x: rect.left + rect.width / 2, y: rect.top - 10, content: "Practice platform" });
+                                                          }}
+                                                          onMouseLeave={handleMouseLeave}
+                                                          className="hover:opacity-80 transition-opacity"
+                                                        >
+                                                          <img src="/bctci-icon.webp" alt="Beyond CTCI" className="h-7 w-7 rounded-sm" />
+                                                        </a>
+                                                      )}
+                                                      <a
+                                                        href={getProblemUrl(name)}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        onClick={() => handleProblemClick(name)}
+                                                        onMouseEnter={(e) => {
+                                                          const rect = e.currentTarget.getBoundingClientRect();
+                                                          setTooltip({ show: true, x: rect.left + rect.width / 2, y: rect.top - 10, content: "AI Interviewer" });
+                                                        }}
+                                                        onMouseLeave={handleMouseLeave}
+                                                        className="hover:opacity-80 transition-opacity"
+                                                      >
+                                                        <img src="/iio-icon.png" alt="interviewing.io" className="h-7 w-7 rounded-sm" />
+                                                      </a>
+                                                    </div>
                                                   </div>
-                                                </a>
+                                                </div>
                                                 {toolsUsingProblem.filter(
                                                   (entry) =>
                                                     entry.tool.id !== tool.id
