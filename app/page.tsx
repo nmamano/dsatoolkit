@@ -55,11 +55,26 @@ const getProblemUrl = (problemName: string): string => {
   return `https://start.interviewing.io/beyond-ctci/solution/${slug}`;
 };
 
+// Slug overrides for beyondctci.dev where their slug differs from ours.
+// These can be removed once beyondctci.dev aligns their slugs with ours —
+// at that point our canonical slugs will work and the overrides are unused.
+const BEYONDCTCI_SLUG_OVERRIDES: Record<string, string> = {
+  "three-sum": "3-sum",
+  "two-array-two-sum": "2-array-2-sum",
+  "four-directional-max-sum-path": "4-directional-max-sum-path",
+  "four-directional-max-sum-path-reconstruction": "4-directional-max-sum-path-reconstruction",
+  "count-zero-sum-paths": "count-0-sum-paths",
+  "sliding-window-max": "sliding-window-maximum",
+  "tree-diameter": "diameter-of-binary-tree",
+  "monkey-eating-bananas": "koko-eating-bananas",
+};
+
 // Get Beyond CTCI editor URL for a problem
 const getBeyondCtciUrl = (problemName: string): string | null => {
   const slug = getProblemSlug(problemName);
   if (!slug) return null;
-  return `https://beyondctci.dev/editor?problem=${slug}`;
+  const beyondCtciSlug = BEYONDCTCI_SLUG_OVERRIDES[slug] || slug;
+  return `https://beyondctci.dev/editor?problem=${beyondCtciSlug}`;
 };
 
 // Get problem difficulty from problem manifest
