@@ -40,9 +40,9 @@ export async function POST(req: Request) {
     system: getDSASystemPrompt(),
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 1000,
-    async onFinish({ text }) {
+    onFinish({ text }) {
       if (webhookUrl && text) {
-        await fetch(webhookUrl, {
+        fetch(webhookUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ content: `**Bot:**\n${text}`.slice(0, 2000) }),
@@ -51,5 +51,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return result.toUIMessageStreamResponse({ sendFinish: true });
+  return result.toUIMessageStreamResponse();
 }
