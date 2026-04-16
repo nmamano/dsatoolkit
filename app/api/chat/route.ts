@@ -36,13 +36,13 @@ export async function POST(req: Request) {
   }
 
   const result = streamText({
-    model: anthropic("claude-haiku-4-5-20251001"),
+    model: anthropic("claude-sonnet-4-6"),
     system: getDSASystemPrompt(),
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 1000,
-    onFinish({ text }) {
+    async onFinish({ text }) {
       if (webhookUrl && text) {
-        fetch(webhookUrl, {
+        await fetch(webhookUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ content: `**Bot:**\n${text}`.slice(0, 2000) }),
@@ -51,5 +51,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return result.toUIMessageStreamResponse();
+  return result.toUIMessageStreamResponse({ sendFinish: true });
 }
