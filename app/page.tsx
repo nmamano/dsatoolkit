@@ -824,8 +824,10 @@ Format:
               <X className="h-4 w-4" />
             </button>
             <p className="text-xs italic text-gray-700 dark:text-gray-200 text-center">
-              To access the problems, solutions, and AI interviewer, you'll have
-              to create an account, but there's nothing else you need to do.
+              The Sample Problems link out to two separate sites: beyondctci.dev,
+              a practice platform, and interviewing.io, our AI interviewer. Only
+              interviewing.io asks you to create a free account - beyondctci.dev
+              doesn't. There's nothing else you need to do.
             </p>
           </div>
         )}
@@ -1460,6 +1462,13 @@ Format:
                   Before reading the solution, launch our{" "}
                   <strong>AI interviewer to try the question yourself</strong> -
                   and then compare your approach. Active learning is key!
+                  <br />
+                  <br />
+                  Each Sample Problem links to two separate sites, shown as two
+                  icons: <strong>beyondctci.dev</strong> (teal icon), a practice
+                  platform where you code your own solution, and{" "}
+                  <strong>interviewing.io</strong> (yellow icon), our AI
+                  interviewer.
                 </p>
                 <div className="my-3">
                   <Image
@@ -1471,7 +1480,10 @@ Format:
                   />
                 </div>
                 <p className="text-xs md:text-sm">
-                  The BCtCI platform requires an account, but{" "}
+                  Only the <strong>AI interviewer</strong> (interviewing.io) asks
+                  you to create an account, and it's free - the{" "}
+                  <strong>beyondctci.dev</strong> practice platform doesn't
+                  require one. Either way,{" "}
                   <strong>all content and the AI interviewer are free</strong>.
                   <br />
                   <br />
