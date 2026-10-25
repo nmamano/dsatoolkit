@@ -1,0 +1,3 @@
+# Only the staged layers (ops/self-host/stage-image.mjs).
+*
+!.image

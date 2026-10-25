@@ -1,14 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "nilmamano.com",
-        pathname: "/blog/**",
-      },
-    ],
-  },
+  // The VPS image runs .next/standalone (Dockerfile); Vercel ignores this.
+  output: "standalone",
   // Cloudflare caches pages for 5 minutes at most. Without this, Next sends a
   // one-year s-maxage on prerendered pages.
   async headers() {

@@ -1,0 +1,96 @@
+# Self-hosting: test, build the site and its image, and push the image to GHCR, only
+# when the site's sources changed. The VPS deploys the image the `main` tag points to
+# (ops/self-host/auto-deploy.sh).
+name: Build site image
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: site-image
+  cancel-in-progress: false
+env:
+  IMAGE_OWNER: nmamano
+  IMAGE_NAME: dsatoolkit-site
+  NEXT_TELEMETRY_DISABLED: "1"
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      # Always the newest main: a queued run builds what main holds now. A plain clone of
+      # the public repo, as in nilmamano.com's workflow (no checkout token needed).
+      - name: Check out main
+        run: git clone --quiet --depth 1 --branch "${{ github.event.repository.default_branch }}" "https://github.com/${{ github.repository }}.git" .
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+          check-latest: true
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: '1.4.4'
+      - name: Digest the image inputs
+        id: inputs
+        run: |
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "digest=$(node ops/self-host/image-inputs.mjs)" >> "$GITHUB_OUTPUT"
+      - name: Find an image with the same inputs
+        id: existing
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+          GHCR_USER: ${{ github.actor }}
+          TAG: inputs-${{ steps.inputs.outputs.digest }}
+        run: |
+          code=0
+          node ops/self-host/registry.mjs exists "$TAG" || code=$?
+          case $code in
+            0) echo "exists=true" >> "$GITHUB_OUTPUT"; echo "The site is unchanged: no new image." ;;
+            1) echo "exists=false" >> "$GITHUB_OUTPUT" ;;
+            *) exit 1 ;;
+          esac
+      - name: Point main at the existing image
+        if: steps.existing.outputs.exists == 'true'
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+          GHCR_USER: ${{ github.actor }}
+        run: node ops/self-host/registry.mjs retag "inputs-${{ steps.inputs.outputs.digest }}" main
+      - name: Install, test, build and stage the layers
+        if: steps.existing.outputs.exists == 'false'
+        run: |
+          bun install --frozen-lockfile
+          bun test ops/self-host
+          bun run build
+          node ops/self-host/stage-image.mjs
+      - name: Build and push the image
+        if: steps.existing.outputs.exists == 'false'
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+          GHCR_USER: ${{ github.actor }}
+          COMMIT: ${{ steps.inputs.outputs.commit }}
+          INPUTS: ${{ steps.inputs.outputs.digest }}
+        run: |
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          image="ghcr.io/$IMAGE_OWNER/$IMAGE_NAME"
+          # One plain linux/amd64 manifest (the VPS), no attestation index.
+          docker buildx build --platform linux/amd64 --provenance=false --sbom=false \
+            --label "org.opencontainers.image.revision=$COMMIT" \
+            --label "org.opencontainers.image.source=https://github.com/${{ github.repository }}" \
+            --label "com.dsatoolkit.inputs=$INPUTS" \
+            -t "$image:sha-$COMMIT" -t "$image:inputs-$INPUTS" -t "$image:main" --push .
+          docker logout ghcr.io
+          digest=$(node ops/self-host/registry.mjs digest main)
+          echo "Pushed $image@$digest (commit $COMMIT)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the newest 30 images
+        if: steps.existing.outputs.exists == 'false'
+        continue-on-error: true
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+          GHCR_USER: ${{ github.actor }}
+        # The VPS keeps the running and the previous image locally, so a pruned tag never
+        # breaks what runs or its rollback. Tags main and keep-* are never pruned.
+        run: node ops/self-host/registry.mjs prune 30

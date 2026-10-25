@@ -1,0 +1,80 @@
+# dsatoolkit.com on the shared VPS (~/nil/self-host-playbook.md; vendored from nilmamano.com's
+# ops/self-host/compose.yaml). auto-deploy.sh runs it as:
+#   docker compose -p dsatoolkit -f /opt/dsatoolkit/compose.yaml --env-file /opt/dsatoolkit/release.env up -d --wait
+# release.env holds DSA_SITE_IMAGE=ghcr.io/nmamano/dsatoolkit-site@sha256:<digest> (auto-deploy.sh
+# rewrites it) and DSA_UID / DSA_GID, the dedicated system user both containers run as (set
+# once by hand; auto-deploy.sh keeps them). Compose refuses to start without them.
+#
+# Networks: the site container is only on `egress`, an internal network (no route out),
+# shared with the allowlist proxy. Caddy on the host reaches the site through the Unix
+# socket in /run/dsatoolkit (dsatoolkit.tmpfiles.conf: 0755, the socket is 0666), so no port
+# is published. Only the proxy is also on `outbound`, and it opens tunnels only to EGRESS_ALLOW.
+name: dsatoolkit
+
+x-hardening: &hardening
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  user: "${DSA_UID:?set in release.env}:${DSA_GID:?set in release.env}"
+  restart: unless-stopped
+  logging:
+    driver: local
+    options:
+      max-size: 20m
+      max-file: "5"
+
+services:
+  site:
+    <<: *hardening
+    image: ${DSA_SITE_IMAGE:?set in release.env}
+    # ANTHROPIC_API_KEY, DISCORD_WEBHOOK_URL (root-only, 0600).
+    env_file: /etc/dsatoolkit/site.env
+    environment:
+      SITE_SOCKET: /run/dsatoolkit/site.sock
+      NODE_USE_ENV_PROXY: "1"
+      HTTPS_PROXY: http://egress:3128
+      HTTP_PROXY: http://egress:3128
+      NO_PROXY: 127.0.0.1,localhost
+    # Next writes its cache here; the rest of the file system is read-only.
+    tmpfs:
+      - /tmp:size=32m
+      - /app/.next/cache:size=32m,uid=${DSA_UID},gid=${DSA_GID}
+    volumes:
+      - type: bind
+        source: /run/dsatoolkit
+        target: /run/dsatoolkit
+    networks: [egress]
+    depends_on:
+      egress:
+        condition: service_healthy
+    cpus: 0.5
+    mem_limit: 256m
+    memswap_limit: 256m
+    pids_limit: 128
+    # The image's HEALTHCHECK fetches / through the socket.
+
+  egress:
+    <<: *hardening
+    # The same image and digest as the site: one artifact to pin and roll back.
+    image: ${DSA_SITE_IMAGE:?set in release.env}
+    command: ["node", "egress-proxy.mjs"]
+    environment:
+      # The Discord webhook host is discord.com or discordapp.com; drop the one the
+      # webhook in site.env does not use.
+      EGRESS_ALLOW: api.anthropic.com:443,discord.com:443,discordapp.com:443
+      EGRESS_PORT: "3128"
+    networks: [egress, outbound]
+    cpus: 0.1
+    mem_limit: 96m
+    memswap_limit: 96m
+    pids_limit: 64
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('node:net').connect(3128, '127.0.0.1').on('connect', () => process.exit(0)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+networks:
+  egress:
+    internal: true
+  outbound: {}

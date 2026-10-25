@@ -36,3 +36,9 @@ next-env.d.ts
 
 # Bun
 bun.lockb
+
+# Private ops notes and secret files (the self-host move); they stay on the office box
+ops-private/
+
+# Staged image layer (ops/self-host/stage-image.mjs)
+/.image/

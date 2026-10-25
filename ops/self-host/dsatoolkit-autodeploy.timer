@@ -1,0 +1,10 @@
+# dsatoolkit.com: run the automatic deploy five minutes after the last tick ends (not installed).
+[Unit]
+Description=Deploy dsatoolkit.com from its GHCR main tag every five minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitInactiveSec=5min
+
+[Install]
+WantedBy=timers.target

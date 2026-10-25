@@ -1,0 +1,13 @@
+# dsatoolkit.com: one tick of the automatic deploy (auto-deploy.sh; not installed).
+# Installed by hand once; after that auto-deploy.sh keeps this file equal to the copy
+# beside it in /opt/dsatoolkit/ops.
+[Unit]
+Description=Deploy dsatoolkit.com when its GHCR main tag moves
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/dsatoolkit/ops/auto-deploy.sh
+# A pull, the swap and its checks, and a rollback with its checks.
+TimeoutStartSec=15min

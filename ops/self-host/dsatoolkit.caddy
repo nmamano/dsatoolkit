@@ -1,0 +1,69 @@
+# /etc/wg-caddy/dsatoolkit.caddy: dsatoolkit.com on the shared VPS (not installed yet).
+# Imported from the host's Caddyfile (/etc/wg-caddy/Caddyfile) beside the Wall Game, Hosted
+# Isomux, bigOspeedrun and nilmamano.com blocks. The host's global options already trust
+# Cloudflare's ranges with client_ip_headers CF-Connecting-IP (/etc/wg-caddy/cloudflare-ips.caddy),
+# so {client_ip} is the visitor. Behind Cloudflare, ACME's TLS-ALPN challenge cannot reach
+# Caddy, so the names use HTTP-01. After the 24 h soak, add `import cloudflare_only` as the
+# first line of each block (no handle blocks here, so a top-level import runs).
+
+# Plain HTTP: the host's catch-all http:// block answers unknown hosts with 421 (its global
+# options disable the automatic redirects), and Cloudflare's Always Use HTTPS is off. Caddy
+# answers with a 308 to HTTPS on www, path and query kept. ACME's HTTP-01 challenge is still
+# answered on port 80.
+http://dsatoolkit.com, http://www.dsatoolkit.com {
+	redir https://www.dsatoolkit.com{uri} 308
+}
+
+# Vercel answered the apex with a redirect to www, path and query kept; Caddy does the same.
+dsatoolkit.com {
+	tls {
+		issuer acme {
+			disable_tlsalpn_challenge
+		}
+	}
+	redir https://www.dsatoolkit.com{uri} 308
+}
+
+www.dsatoolkit.com {
+	tls {
+		issuer acme {
+			disable_tlsalpn_challenge
+		}
+	}
+	encode zstd gzip
+	# /api/chat accepts at most 32 KiB (app/lib/chat-guard.ts); nothing else takes a body.
+	request_body {
+		max_size 64KiB
+	}
+	reverse_proxy unix//run/dsatoolkit/site.sock {
+		# The chat rate limit keys on the first X-Forwarded-For address: replace whatever the
+		# client or Cloudflare sent with the one address Caddy resolved.
+		header_up X-Forwarded-For {client_ip}
+		header_up X-Forwarded-Proto https
+		# Stream chat replies as they arrive.
+		flush_interval -1
+		# A deploy recreates the one site container (a few seconds); retry the socket
+		# meanwhile instead of answering 502.
+		lb_try_duration 15s
+		lb_try_interval 250ms
+		transport http {
+			dial_timeout 5s
+			response_header_timeout 70s
+		}
+	}
+	# wg-caddy may write only /var/log/wg-caddy. The filter drops the request (client
+	# address, headers), as Wall Game's log does.
+	log {
+		output file /var/log/wg-caddy/dsatoolkit-access.json {
+			roll_size 10MiB
+			roll_keep 5
+			roll_keep_for 168h
+		}
+		format filter {
+			wrap json
+			fields {
+				request delete
+			}
+		}
+	}
+}
