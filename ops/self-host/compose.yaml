@@ -59,9 +59,9 @@ services:
     image: ${DSA_SITE_IMAGE:?set in release.env}
     command: ["node", "egress-proxy.mjs"]
     environment:
-      # The Discord webhook host is discord.com or discordapp.com; drop the one the
-      # webhook in site.env does not use.
-      EGRESS_ALLOW: api.anthropic.com:443,discord.com:443,discordapp.com:443
+      # The chat calls the Anthropic API and the Discord webhook (its host is discord.com,
+      # checked in site.env on 2026-10-26).
+      EGRESS_ALLOW: api.anthropic.com:443,discord.com:443
       EGRESS_PORT: "3128"
     networks: [egress, outbound]
     cpus: 0.1

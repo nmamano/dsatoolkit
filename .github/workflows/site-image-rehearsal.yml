@@ -1,0 +1,69 @@
+# Self-hosting rehearsal images (staging, vendored from nilmamano.com): run by hand. They never move the main tag.
+#   rehearsal-good  a copy of the image main points to now (the same digest)
+#   rehearsal-bad   that image with a health check that always fails, so a deploy of it
+#                   must roll back by itself
+# The VPS follows one of them when DSA_TAG names it in /etc/dsatoolkit/auto-deploy.env.
+name: Push a site rehearsal image
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Rehearsal tag to push (main is never changed)
+        type: choice
+        options: [rehearsal-good, rehearsal-bad]
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: site-image-rehearsal
+  cancel-in-progress: false
+env:
+  IMAGE_OWNER: nmamano
+  IMAGE_NAME: dsatoolkit-site
+jobs:
+  rehearsal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      # A plain clone of the public repo, as in site-image.yml.
+      - name: Check out
+        run: git clone --quiet --depth 1 "https://github.com/${{ github.repository }}.git" .
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+          check-latest: true
+      - name: Accept only the two rehearsal tags
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          case "$TAG" in
+            rehearsal-good|rehearsal-bad) ;;
+            *) echo "Not a rehearsal tag: $TAG"; exit 1 ;;
+          esac
+      - name: Copy the main image to rehearsal-good
+        if: inputs.tag == 'rehearsal-good'
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+          GHCR_USER: ${{ github.actor }}
+        run: node ops/self-host/registry.mjs retag main rehearsal-good
+      - name: Build rehearsal-bad from the main image with a failing health check
+        if: inputs.tag == 'rehearsal-bad'
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+          GHCR_USER: ${{ github.actor }}
+        run: |
+          image="ghcr.io/$IMAGE_OWNER/$IMAGE_NAME"
+          digest=$(node ops/self-host/registry.mjs digest main)
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
+          # One layer on the exact main digest: the same site and commit label, but the
+          # health check fails, so `compose up --wait` fails and auto-deploy.sh rolls back.
+          printf '%s\n' \
+            "FROM $image@$digest" \
+            'HEALTHCHECK --interval=5s --timeout=3s --start-period=5s --retries=2 CMD ["node", "-e", "process.exit(1)"]' \
+            'LABEL com.dsatoolkit.rehearsal=bad' |
+            docker buildx build --platform linux/amd64 --provenance=false --sbom=false \
+              -t "$image:rehearsal-bad" --push -
+          docker logout ghcr.io
