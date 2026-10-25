@@ -4,13 +4,12 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/react";
 import type React from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://dsatoolkit.com"),
+  metadataBase: new URL("https://www.dsatoolkit.com"),
   title: "TOOLKIT-X | Like a problem list, but for reusable techniques",
   description:
     "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
@@ -35,11 +34,11 @@ export const metadata: Metadata = {
     title: "TOOLKIT-X | Like a problem list, but for reusable techniques",
     description:
       "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
-    url: "https://dsatoolkit.com",
+    url: "https://www.dsatoolkit.com",
     siteName: "Toolkit-X",
     images: [
       {
-        url: "https://dsatoolkit.com/thumbnail.png",
+        url: "https://www.dsatoolkit.com/thumbnail.png",
         width: 1200,
         height: 630,
         alt: "TOOLKIT-X - Like a problem list, but for reusable techniques",
@@ -53,7 +52,7 @@ export const metadata: Metadata = {
     title: "TOOLKIT-X | Like a problem list, but for reusable techniques",
     description:
       "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
-    images: ["https://dsatoolkit.com/thumbnail.png"],
+    images: ["https://www.dsatoolkit.com/thumbnail.png"],
   },
 };
 
@@ -96,7 +95,6 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
-          <Analytics />
         </ThemeProvider>
       </body>
     </html>
