@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -60,6 +61,15 @@ function renderFormattedText(text: string): React.ReactNode[] {
   return result;
 }
 
+// The server takes at most 20 messages, and the last one is the visitor's.
+const transport = new DefaultChatTransport({
+  prepareSendMessagesRequest: ({ id, messages, body, trigger, messageId }) => {
+    const recent = messages.slice(-20);
+    while (recent.length > 1 && recent[0].role !== "user") recent.shift();
+    return { body: { ...body, id, messages: recent, trigger, messageId } };
+  },
+});
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -67,6 +77,7 @@ export default function ChatWidget() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { messages, sendMessage, status, error } = useChat({
+    transport,
     onError: () => {},
   });
 
@@ -189,6 +200,7 @@ export default function ChatWidget() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about DS&A techniques..."
+                maxLength={1800}
                 disabled={isLoading}
                 className="flex-1"
               />
