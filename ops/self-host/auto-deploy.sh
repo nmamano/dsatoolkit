@@ -16,10 +16,12 @@
 #     $env_dir/purge-token. A failed purge is retried and logged and does not fail the
 #     deploy: pages carry s-maxage=300, so the edge heals in 5 minutes.
 #
-# GitHub reads: the registry (ghcr.io) for the tag, which is not the api.github.com rate
-# limit; and one conditional api.github.com request per tick (the image workflow's newest
-# run, for `waiting`). It sends the last ETag; a 304 answer does not count against the
-# shared 60/h unauthenticated limit.
+# GitHub reads: the registry (ghcr.io) for the tag first, which is not the api.github.com
+# rate limit. Only when the tag moved to a digest that is neither deployed nor failed, one
+# conditional api.github.com request (the image workflow's newest run, for `waiting`). The
+# steady state costs no API call: anonymous requests share 60/h per VPS address with every
+# other job there, and an anonymous 304 may count against it (unchecked, Lead SRE
+# 2026-10-26). The registry-first order is the one of the static-site kit's static-deploy.sh.
 #
 # Per-host values come from $env_dir/auto-deploy.env (0600), plain KEY=value, never run:
 #   DSA_IMAGE           ghcr.io/nmamano/dsatoolkit-site
@@ -207,29 +209,32 @@ main_digest() {
 
 select_target() {
   local status attempts
-  if ! status=$(image_run_status); then
-    tick_error api "the image workflow runs could not be read"
-    return 1
-  fi
   if ! digest=$(main_digest); then
     tick_error registry "the registry's $tag tag could not be read"
     return 1
   fi
+  if [[ $digest == "$(release_digest "$root/release.env")" ]]; then
+    rm -f "$state/tick-error-since" "$state/waiting-since"
+    result=up_to_date phase=select
+    return 1
+  fi
+  if grep -qx "$digest" "$state/failed" 2>/dev/null; then
+    rm -f "$state/tick-error-since"
+    result=failed_target phase=select
+    return 1
+  fi
+  if ! status=$(image_run_status); then
+    tick_error api "the image workflow runs could not be read"
+    return 1
+  fi
   rm -f "$state/tick-error-since"
-  # A run that has not completed may still push a new image.
+  # A run still in progress may push a newer image; this one is green, so it deploys now and
+  # the next tick takes the newer one.
   if [[ $status != completed && $status != none ]]; then
     waiting=true
     [[ -f $state/waiting-since ]] || date -u +%FT%TZ >"$state/waiting-since"
   else
     rm -f "$state/waiting-since"
-  fi
-  if [[ $digest == "$(release_digest "$root/release.env")" ]]; then
-    if $waiting; then result=waiting phase=image_runs; else result=up_to_date phase=select; fi
-    return 1
-  fi
-  if grep -qx "$digest" "$state/failed" 2>/dev/null; then
-    result=failed_target phase=select
-    return 1
   fi
   # A pull can fail for a passing reason (network, registry). Two more ticks, then the
   # digest is marked failed.

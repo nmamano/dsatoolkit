@@ -146,21 +146,23 @@ test("status.json has exactly the Hosted Isomux fields, in order; an unchanged t
   expect(status.deployed).toBe(commit(1));
   expect(status.units).toBe("absent");
   expect(purges).toHaveLength(0);
-  // The second read sends the ETag and gets a 304, which does not count against the API limit.
+  // An unchanged tag costs no api.github.com request: the registry is read first.
   await tick();
-  expect(served).toEqual({ ok: 1, notModified: 1 });
+  expect(served).toEqual({ ok: 0, notModified: 0 });
 });
 
-test("a running image workflow is waiting; a new main digest deploys and purges the zone", async () => {
+test("a new main digest deploys and purges the zone; a running workflow only sets waiting", async () => {
   runStatus = "in_progress";
-  let { status } = await tick();
-  expect(status.result).toBe("waiting");
-  expect(status.waiting).toBe(true);
-  runStatus = "completed";
   mainDigest = digest(2);
-  ({ status } = await tick());
+  let { status } = await tick();
   expect(status.result).toBe("deployed");
+  expect(status.waiting).toBe(true);
   expect(status.deployed).toBe(commit(2));
+  expect(served).toEqual({ ok: 1, notModified: 0 });
+  runStatus = "completed";
+  ({ status } = await tick());
+  expect(status.result).toBe("up_to_date");
+  expect(status.waiting).toBe(false);
   // The image line changes; the dedicated uid and gid stay.
   expect(readFileSync(join(root, "release.env"), "utf8")).toBe(`DSA_UID=990\nDSA_GID=990\nDSA_SITE_IMAGE=${IMAGE}@${digest(2)}\n`);
   expect(purges).toEqual([{ auth: "Bearer stub-purge-token", body: '{"purge_everything":true}', ok: true }]);
@@ -216,10 +218,16 @@ test("without a zone or a token, a deploy runs and skips the purge", async () =>
 });
 
 test("API errors, hold, lock and bad config deploy nothing", async () => {
+  // The workflow-runs API is read only when the tag moved: an API error then deploys nothing.
+  const running = mainDigest;
   apiFails = true;
   let { status } = await tick();
+  expect(status.result).toBe("up_to_date");
+  mainDigest = digest(10);
+  ({ status } = await tick());
   expect(status.result).toBe("tick_error");
   apiFails = false;
+  mainDigest = running;
   writeFileSync(join(envDir, "auto-deploy.hold"), "");
   ({ status } = await tick());
   expect(status.result).toBe("held");
