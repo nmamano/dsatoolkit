@@ -42,3 +42,6 @@ ops-private/
 
 # Staged image layer (ops/self-host/stage-image.mjs)
 /.image/
+
+# Python bytecode (ops/deadman tests)
+__pycache__/

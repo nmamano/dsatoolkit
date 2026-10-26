@@ -1,0 +1,17 @@
+{
+  "site": "www.dsatoolkit.com",
+  "https_url": "https://www.dsatoolkit.com/",
+  "cert_names": ["dsatoolkit.com", "www.dsatoolkit.com"],
+  "sitehealth": {
+    "key": "~/nil/vps-ops/sitehealth/id_ed25519",
+    "known_hosts": "<pinned known_hosts of the VPS>",
+    "address": "<VPS tailnet address>",
+    "site": "dsatoolkit"
+  },
+  "webhook": {
+    "url": "http://localhost:4000/hooks/<webhook id>",
+    "secret_file": "~/nil/dsatoolkit/ops-private/secrets/deadman-webhook-secret",
+    "signature_header": "X-Deadman-Signature",
+    "event_header": "X-Deadman-Event"
+  }
+}

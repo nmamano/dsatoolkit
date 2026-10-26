@@ -1,0 +1,11 @@
+# ~/.config/systemd/user/dsatoolkit-deadman.service on auntie (the office box).
+# Install: systemctl --user link this file and dsatoolkit-deadman.timer, then
+# systemctl --user enable --now dsatoolkit-deadman.timer (after B9: status.json exists).
+[Unit]
+Description=dsatoolkit.com dead-man (deploy, HTTPS and origin certificates; alerts the DSA Toolkit Agent once per incident)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -I %h/nil/dsatoolkit/ops/deadman/deadman.py
+StandardOutput=journal
+StandardError=journal

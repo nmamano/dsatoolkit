@@ -1,0 +1,11 @@
+# ~/.config/systemd/user/dsatoolkit-deadman.timer on auntie: every 10 minutes.
+[Unit]
+Description=Run the dsatoolkit.com dead-man every 10 minutes
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=10min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
