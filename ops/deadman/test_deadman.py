@@ -116,6 +116,35 @@ class DeadmanTest(unittest.TestCase):
         self.assertEqual(self.checks_sent(), ['deploy', 'deploy'])
         self.assertIn('dsatoolkit-site-1=exited/unhealthy', self.sent[1]['text'])
 
+    def test_unhealthy_running_container_needs_two_runs_in_a_row(self):
+        # Host contention makes the 5 s Docker health probe flap while the site serves 200 (2026-10-31).
+        self.tick()
+        flap = health(egress={'present': True, 'status': 'running', 'health': 'unhealthy'})
+        for minutes in (10, 30, 50):  # fail, ok, fail, ok, fail: never 2 in a row
+            self.src.reads = [flap]
+            self.tick(minutes)
+            self.src.reads = [health()]
+            self.tick(minutes + 10)
+        self.assertEqual(self.sent, [])
+        self.src.reads = [flap]
+        self.tick(70)
+        self.assertEqual(self.sent, [])
+        self.tick(80)
+        self.assertEqual(self.checks_sent(), ['deploy'])
+        self.assertIn('dsatoolkit-egress-1=running/unhealthy', self.sent[0]['text'])
+
+    def test_hard_problem_with_unhealthy_container_stays_immediate(self):
+        self.tick()
+        self.src.reads = [health(status(result='rolled_back'), egress={'present': True, 'status': 'running', 'health': 'unhealthy'})]
+        self.tick(10)
+        self.assertEqual(self.checks_sent(), ['deploy'])
+
+    def test_exited_container_stays_immediate(self):
+        self.tick()
+        self.src.reads = [health(site={'present': True, 'status': 'exited', 'health': None})]
+        self.tick(10)
+        self.assertEqual(self.checks_sent(), ['deploy'])
+
     def test_https_needs_two_failures_in_a_row(self):
         self.tick()
         self.src.code = 502

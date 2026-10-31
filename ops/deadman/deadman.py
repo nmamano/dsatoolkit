@@ -12,6 +12,8 @@ Checks:
           held or waiting for 24 h, ticks failing for 1 h, units not ok, a container not
           running and healthy. A container that is created, restarting or starting its health
           check is read again every 30 s, at most 4 times. A failed read is "unknown".
+          When the only problem is a running container with a failing health check, it must
+          show on 2 runs in a row (20 min); every other deploy problem counts at once.
   https   GET https://www.dsatoolkit.com/ on the public path (Cloudflare once proxied).
           Problem: not 200 on 2 runs in a row (20 min). A connection error counts the same.
   cert:<name>  TLS handshake to the VPS origin address with SNI <name>, for dsatoolkit.com and
@@ -54,6 +56,9 @@ CONFIG = REPO / 'ops-private/deadman.json'
 STATE_DIR = Path.home() / '.local/state/dsatoolkit-deadman'
 RUNBOOK = '~/nil/dsatoolkit/ops/self-host/README.md'
 HTTPS_FAILS = 2
+# A running container whose Docker health check fails must fail 2 runs in a row: under host contention
+# the 5 s probe flaps while the site serves 200 (2026-10-31, 9 alerts in 4 h; Nil approved the change).
+HEALTH_FAILS = 2
 UNKNOWNS = 3
 CERT_DAYS = 21
 TICK_LIMIT = timedelta(minutes=45)
@@ -132,8 +137,9 @@ def settling(data):
                for c in (data.get('containers') or {}).values())
 
 
-def deploy_problems(data, now, memory):
-    """The problems in one sitehealth read; updates memory (held_since)."""
+def deploy_problems(data, now, memory, soft=None):
+    """The problems in one sitehealth read; updates memory (held_since).
+    A running container that is only unhealthy also goes to `soft` (when given)."""
     problems = []
     status = data.get('auto_deploy') or {}
     if status.get('missing') or status.get('malformed') or not status:
@@ -169,13 +175,16 @@ def deploy_problems(data, now, memory):
             problems.append(f'{name}=missing')
         elif c.get('error') or c.get('status') != 'running' or c.get('health') not in (None, 'healthy'):
             problems.append(f"{name}={c.get('status')}/{c.get('health')}")
+            if soft is not None and not c.get('error') and c.get('status') == 'running':
+                soft.append(problems[-1])
     if not containers:
         problems.append('no container states')
     return problems
 
 
 def check_deploy(src, now, memory):
-    """(ok, evidence); ok is None when sitehealth cannot be read."""
+    """(ok, evidence, fails_needed); ok is None when sitehealth cannot be read. fails_needed is
+    HEALTH_FAILS when the only problems are running-but-unhealthy containers, else 1."""
     try:
         data = src.sitehealth()
         for _ in range(SETTLE_READS - 1):
@@ -184,12 +193,13 @@ def check_deploy(src, now, memory):
             src.pause(SETTLE_SECONDS)
             data = src.sitehealth()
     except Exception as error:
-        return None, f'read_error={type(error).__name__}'
-    problems = deploy_problems(data, now, memory)
+        return None, f'read_error={type(error).__name__}', 1
+    soft = []
+    problems = deploy_problems(data, now, memory, soft)
     if problems:
-        return False, ' '.join(problems)[:300]
+        return False, ' '.join(problems)[:300], HEALTH_FAILS if soft == problems else 1
     status = data['auto_deploy']
-    return True, f"result={status.get('result')} deployed={str(status.get('deployed'))[:12]}"
+    return True, f"result={status.get('result')} deployed={str(status.get('deployed'))[:12]}", 1
 
 
 def check_https(src, url):
@@ -211,7 +221,7 @@ def check_cert(src, name, now):
     return days >= CERT_DAYS, f'days_left={days:.1f} not_after={stamp(expires)}'
 
 
-def evaluate(entry, check, ok, assume_armed=False):
+def evaluate(entry, check, ok, assume_armed=False, fails_needed=1):
     """Updates one check's state; returns 'problem', 'unknown' or None (no incident)."""
     if ok is True:
         entry.update(armed=True, fails=0, unknowns=0, incident=False, pending=None)
@@ -224,8 +234,8 @@ def evaluate(entry, check, ok, assume_armed=False):
     entry['unknowns'] = 0
     entry['fails'] = entry.get('fails', 0) + 1
     if check == 'https':
-        return 'problem' if entry['fails'] >= HTTPS_FAILS else None
-    return 'problem'
+        fails_needed = HTTPS_FAILS
+    return 'problem' if entry['fails'] >= fails_needed else None
 
 
 def sender(config):
@@ -250,9 +260,9 @@ def run(config, src, send, state, state_dir, dry_run=False, assume_armed=False, 
     for name in config['cert_names']:
         results['cert:' + name] = check_cert(src, name, now)
     lines = []
-    for check, (ok, evidence) in results.items():
+    for check, (ok, evidence, *needed) in results.items():
         entry = state.setdefault('checks', {}).setdefault(check, {})
-        verdict = evaluate(entry, check, ok, assume_armed)
+        verdict = evaluate(entry, check, ok, assume_armed, *needed)
         lines.append(f'{check} ok={ok} {evidence}' + (f' verdict={verdict}' if verdict else ''))
         if verdict and not entry.get('incident'):
             entry['incident'] = True
