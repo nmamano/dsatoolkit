@@ -51,7 +51,10 @@ services:
     mem_limit: 256m
     memswap_limit: 256m
     pids_limit: 128
-    # The image's HEALTHCHECK fetches / through the socket.
+    # The image's HEALTHCHECK fetches / through the socket. Only its timeout is changed here
+    # (5 s timed out under host contention, 2026-11-01); the test is inherited from the image.
+    healthcheck:
+      timeout: 15s
 
   egress:
     <<: *hardening
